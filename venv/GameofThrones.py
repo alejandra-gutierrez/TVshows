@@ -65,6 +65,7 @@ fig = px.bar(rating,
 
 #  ------------------------ Battles per episode ------------------------------------
 
+# Create dataframe with main battles
 d = {'Name': ["Frozen Lake Battle", " Loot Train Attack",
               "Battle of Blackwater", "Battle of Castle Black", "Battle of the Bastards", "Fall of King’s Landing",
               "Battle of Winterfell", "Dance of Dragons", "Stormbron"],
