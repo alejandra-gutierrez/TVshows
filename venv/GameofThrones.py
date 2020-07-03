@@ -12,21 +12,21 @@ df.rename(columns={"US viewers (million)": "views", "Imdb Rating": "Rating", 'No
 df.drop(['IMDB votes','Runtime (mins)','Episode Number','IMDB Description','Writer','Director', 'Episode Name' ,'Original Air Date' ], axis=1, inplace=True)
 
 # ------------------------------------ Heat Map -----------------------------------
-color_map = 'RdPu'
-title = 'Game of Thrones - Rate IMDb'
-df1=pd.read_csv("Data/Heatmap_GOT.csv", index_col=0)
-sns.heatmap(df1, annot=True, cmap=color_map, annot_kws={"size":8}, linewidths=.5)
-plt.title(title, fontsize=15)
-plt.show()
+# color_map = 'RdPu'
+# title = 'Game of Thrones - Rate IMDb'
+# df1=pd.read_csv("Data/Heatmap_GOT.csv", index_col=0)
+# sns.heatmap(df1, annot=True, cmap=color_map, annot_kws={"size":8}, linewidths=.5)
+# plt.title(title, fontsize=15)
+# plt.show()
 
 # --------------------------- Views per season bar plot ------------------------------
 
-views =df.groupby(['Season']).mean().reset_index()
-fig = px.bar(views,
-             x='Season',
-             y= 'views',
-             color='Season',
-             title = "Views (in millions) per season")
+# views =df.groupby(['Season']).mean().reset_index()
+# fig = px.bar(views,
+#              x='Season',
+#              y= 'views',
+#              color='Season',
+#              title = "Views (in millions) per season")
 # fig.show()
 
 
@@ -38,30 +38,24 @@ merged = pd.merge(df, deaths, on='episode', how='inner')
 new_merged = merged.groupby(['episode','views','Rating', 'Season', 'Death_Count']).size().reset_index(name='deaths')
 
 # -------------------------- Plotting -----------------------------
-plt.figure()
-
-# FIGURE 1 - Summative Scatter plot
-ax = plt.subplot(1,2,1)
-ax = sns.scatterplot(data=new_merged,
-                     x="views", y="Rating",
-                     hue="deaths", size="deaths")
-# plt.legend(bbox_to_anchor=(1.05, 1),  borderaxespad=0.)
-
+# plt.figure()
+#
+# # FIGURE 1 - Summative Scatter plot
+# ax = plt.subplot(1,2,1)
+# ax = sns.scatterplot(data=new_merged,
+#                      x="views", y="Rating",
+#                      hue="deaths", size="deaths")
+# # plt.legend(bbox_to_anchor=(1.05, 1),  borderaxespad=0.)
+#
 # FIGURE 2 - Annotated Scatter plot
 ax = plt.subplot(1,2,2)
 p1 = sns.scatterplot(data=merged, x="views", y="Rating",hue="Season" )
 # plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+
 for n in range(0, merged.shape[0]):
     p1.text(merged.views[n] + 0.2, merged.Rating[n], merged.episode[n], horizontalalignment='left', color='black', fontsize=5)
 # plt.show()
 
-# ------------------------- Death per episode and rating BAR ----------------------------
-rating =df.groupby(['Death_Count']).mean().reset_index()
-fig = px.bar(rating,
-             x='Death_Count',
-             y= 'Rating',
-             color='Rating')
-# fig.show()
 
 #  ------------------------ Battles per episode ------------------------------------
 
@@ -81,6 +75,6 @@ merged = merged.replace(np.nan, '', regex=True)
 p1=sns.scatterplot(data=merged, x="views", y="Rating", hue = 'Season')
 # plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
 for n in range(0, merged.shape[0]):
-    p1.text(merged.views[n] + 0.2, merged.Rating[n], merged.Name[n], horizontalalignment='center', color='black', fontsize=8)
-# plt.show()
+    p1.text(merged.views[n] + 0.2, merged.Rating[n], merged.Name[n], horizontalalignment='center', color='black',weight='semibold', fontsize=9)
+plt.show()
 
